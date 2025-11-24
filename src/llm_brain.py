@@ -17,7 +17,7 @@ def ask_brain(prompt: str, history: Optional[List[Dict]] = None) -> str:
     # Ollama chat format
     messages = history + [{"role": "user", "content": prompt}]
 
-    url = f"http://{config.LLM_HOST}:{config.LLM_PORT}/api/chat"
+    url = f"http://192.168.1.8:11434/api/generate"
     payload = {
         "model": config.LLM_MODEL,
         "messages": messages,

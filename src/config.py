@@ -1,24 +1,58 @@
+# src/config.py
 from pathlib import Path
 
-# Root of the project (…/sonu-robot)
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# ---------- Paths ----------
+BASE_DIR = Path(__file__).resolve().parent.parent
+VOICE_DIR = BASE_DIR / "voice"
+MODEL_PATH = VOICE_DIR / "model"
 
-# -------- Audio / STT --------
-VOICE_DIR = PROJECT_ROOT / "voice"
-MODEL_PATH = VOICE_DIR / "model"          # folder containing Vosk model files
-SOUNDS_DIR = VOICE_DIR / "sounds"
-IDLE_SOUND = SOUNDS_DIR / "purr.wav"      # cat-like breathing sound
+# idle breathing / purring sound
+IDLE_SOUND = VOICE_DIR / "sounds" / "purr.wav"
 
-# Change this if your mic index changes
-MIC_DEVICE_INDEX = 1
+# ---------- Audio / mic ----------
+# Use the index that worked for you before (USB PnP Sound Device).
+MIC_DEVICE_INDEX = 1          # change if your mic index is different
+SAMPLE_RATE = 44100           # will be checked at runtime
 
-# -------- LLM / Ollama --------
-# Set this to your laptop's LAN IP (you already used 192.168.1.34)
-LLM_HOST = "192.168.1.34"
+# ---------- Wake / sleep words ----------
+WAKE_PHRASES = [
+    "hey sonu",
+    "hey sono",
+    "hey so new",
+    "hey son"
+]
+
+SLEEP_PHRASES = [
+    "you can sleep now",
+    "go to sleep",
+    "sleep now",
+    "take rest",
+    "sonu sleep",
+]
+
+# Movement command words
+COMMAND_WORDS = [
+    "forward",
+    "backward",
+    "back",
+    "left",
+    "right",
+    "stop",
+    "continue moving forward",
+    "continue forward",
+    "continue moving back",
+    "continue backward",
+    "continue left",
+    "continue right",
+]
+
+# ---------- LLM server (your laptop / Ollama) ----------
+LLM_HOST = "192.168.1.8"     # your laptop’s IP on Wi-Fi
 LLM_PORT = 11434
 LLM_MODEL = "phi3:mini"
+# ===== Movement Durations (seconds) =====
 
-# -------- Movement tuning --------
-STEP_FORWARD_SEC = 1.5
-STEP_TURN_SEC = 0.8
-LONG_MOVE_SEC = 999.0   # for "continue moving forward" etc.
+STEP_FORWARD_SEC = 1.0
+STEP_BACKWARD_SEC = 1.0
+STEP_LEFT_SEC = 0.7
+STEP_RIGHT_SEC = 0.7
